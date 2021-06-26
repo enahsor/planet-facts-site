@@ -12,6 +12,7 @@ export const Container = styled.ul`
   font-weight: bold;
   font-family: ${fonts.primary};
   margin-bottom: 8ch;
+
   ${mq.small} {
     visibility: visible;
   }
@@ -23,5 +24,5 @@ export const Section = styled.li`
   cursor: pointer;
   opacity: ${(props) => (props.$isActive ? 1 : 0.4)};
   border-bottom: ${(props) =>
-    props.$isActive ? `3px solid ${colors.primaryColor}` : null};
+    props.$isActive ? `3px solid ${props.$accent}` : null};
 `;

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { getPlanetNames, getPlanetDataByName } from "utils";
-import { Container, HiddenMenu } from "./lib";
+import { Container, HiddenMenu, MenuItem } from "./lib";
 import { useTransition } from "react-spring";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaTimes } from "react-icons/fa";
@@ -25,11 +25,12 @@ const Nav = (props) => {
     setIsMenuVisible(false);
   }
 
+
   function getMenuItems() {
     return planetNames.map((name) => (
-      <li key={name} onClick={() => handleItemClick(name)}>
+      <MenuItem $isActive={name === props.planetName} $accent={props.accent} key={name} onClick={() => handleItemClick(name)}>
         {name}
-      </li>
+      </MenuItem>
     ));
   }
 
@@ -50,7 +51,7 @@ const Nav = (props) => {
               />
               {menuTransition((style, item) => {
                 return item ? (
-                  <HiddenMenu tabIndex="0" style={style}>
+                  <HiddenMenu tabIndex="0" ref={(i) => (i && item) && i.focus()} style={style} $accent={props.accent} onBlur={() => setIsMenuVisible(false)}>
                     {getMenuItems()}
                   </HiddenMenu>
                 ) : null;

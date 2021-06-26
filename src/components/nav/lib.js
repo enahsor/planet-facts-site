@@ -4,9 +4,14 @@ import * as mq from "styles/media-queries";
 import * as colors from "styles/colors";
 import * as fonts from "styles/fonts";
 
+export const MenuItem = styled.li`
+  color: ${props => props.$isActive ? props.$accent : null};
+  
+`
+
 export const HiddenMenu = styled(animated.ul)`
-  position: absolute;
-  background-color: ${colors.primaryColor};
+  position: fixed;
+  background-color: ${(props) => props.$accent};
   height: 100vh;
   top: 0;
   display: flex;
@@ -16,6 +21,7 @@ export const HiddenMenu = styled(animated.ul)`
   z-index: 1;
   font-family: ${fonts.primary};
   font-weight: bold;
+  outline: none;
   > li {
     padding: 12px;
     width: 100%;
@@ -55,9 +61,27 @@ export const Container = styled.header`
       > li {
         margin-left: 25px;
         font-size: 1.7ch;
-        font-weight: bold;
+        font-family: ${fonts.primary};
+        opacity: 0.8;
         cursor: pointer;
+        
       }
+
+    }
+
+    ${mq.medium}{
+        flex-direction: column;
+        > li {
+          font-size: 3.5ch;
+          padding: 3ch 0ch 4ch 0ch;
+        }
+
+        > span{
+         width: 100%;
+         justify-content: space-around;
+         letter-spacing: 1px;
+         margin-bottom: 1ch;
+        }
     }
 
     ${mq.small} {

@@ -1,36 +1,55 @@
-import { Container } from "./lib";
-import { details } from "config/index";
-import { useRef, useEffect, useState } from "react";
-import { animated, config, useSpring, useTransition } from "react-spring";
+import { Container, Section } from "./lib";
+import {FaExternalLinkSquareAlt} from "react-icons/fa"
+import { details, sections} from "config/index";
+import { useRef, useEffect} from "react";
+import { animated, useTransition } from "react-spring";
+import ColorGetter from "fast-average-color"
 
-const Content = ({ activePlanet, activeSection }) => {
+const Content = ({ activePlanet, activeSection, accent, setAccentColor, setActiveSection }) => {
   const previousPlanetRef = useRef(activePlanet.name);
-  const [imgSrc, setImgSrc] = useState("");
-
-  import(activePlanet.images[activeSection.name]).then((src) => {
-    setImgSrc(src.default);
-  });
-
+  const planetImgRef = useRef()
+  
+  const imgSrc = require("../../"+activePlanet.images[activeSection.name])
+  
   useEffect(() => {
     previousPlanetRef.current = activePlanet.name;
   }, [activePlanet.name]);
+
+  useEffect(() => {
+    const img = planetImgRef.current
+
+    const colorGetter = new ColorGetter()
+
+    colorGetter.getColorAsync(img).then(color => {
+      setAccentColor(color.hex)
+    })
+
+    return () => colorGetter.destroy()
+    
+  }, [activePlanet.name])
 
   const isPlanetDifferent = previousPlanetRef.current !== activePlanet.name;
 
   const transition = useTransition(isPlanetDifferent, {
     from: {
-      transform: "translateX(200px)"
+      opacity: 0,
+    
     },
     enter: {
-      transform: "translateX(0px)"
+      opacity: 1,
+      
     },
     leave: {
-      transform: "translateX(200px)"
+      opacity: 0
     }
   });
 
   function getContent() {
     return activePlanet[activeSection.name].content;
+  }
+
+  function getSource(){
+    return activePlanet[activeSection.name].source
   }
 
   return (
@@ -40,16 +59,32 @@ const Content = ({ activePlanet, activeSection }) => {
           return (
             !item && (
               <animated.div style={styles} key={activePlanet.name}>
-                <img alt={activePlanet.name} src={imgSrc} />
+                <img alt={activePlanet.name} src={imgSrc.default} ref={planetImgRef}/>
               </animated.div>
             )
           );
         })}
       </div>
       <section>
-        <h1>{activePlanet.name}</h1>
-        <p>{getContent()}</p>
+        <figure>
+          <h1>{activePlanet.name}</h1>
+          <p>{getContent()}</p>
+          <figcaption>
+            <span>
+              Source&emsp;:&emsp;
+            </span> 
+            <cite>
+              <a href={getSource()} target="_blank">Wikipedia</a>
+              <FaExternalLinkSquareAlt/>
+            </cite>
+          </figcaption>
+        </figure>
       </section>
+      <ul>{
+        sections.map(section => {
+          return <Section $isActive={activeSection.id === section.id} $accent={accent} key={section.id} onClick={() => setActiveSection(section)}>{section.alias}</Section>
+        })
+      }</ul>
       <aside>
         <ul>
           {details.map((detail) => {

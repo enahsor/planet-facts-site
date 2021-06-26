@@ -5,7 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "node-vibrant": "3.2.1-alpha.1",
+    "fast-average-color": "^6.4.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "4.2.0",

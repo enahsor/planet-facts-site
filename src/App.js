@@ -3,33 +3,27 @@ import ExtraNav from "components/extra-nav";
 import Content from "components/content";
 import { data, particlesConfig, sections } from "config";
 import Particles from "react-particles-js";
-import { useState, useLayoutEffect } from "react";
+import { useState } from "react";
+import * as colors from "styles/colors"
 
 export default function App() {
   const [planet, setPlanet] = useState(() => data[0]); // first planet is our initial state
   const [activeSection, setActiveSection] = useState(() => sections[0]);
-
-  /*useLayoutEffect(() => {
-    data.forEach((planet) => {
-      Object.keys(planet.images).forEach((imageSrc) => {
-        const img = new Image();
-        img.src = imageSrc;
-      });
-    });
-  }, []);*/
+  const [accentColor, setAccentColor] = useState(colors.primaryColor)
 
   return (
     <div>
       <Particles
         params={particlesConfig}
-        style={{ position: "absolute", zIndex: "-1", minHeight: "100%" }}
+        style={{ position: "absolute", zIndex: "-1", height: "100%", width: "100%" }}
       />
-      <Nav setPlanet={setPlanet} />
+      <Nav setPlanet={setPlanet} accent={accentColor} planetName={planet.name}/>
       <ExtraNav
         activeSection={activeSection.id}
         setActiveSection={setActiveSection}
+        accent={accentColor}
       />
-      <Content activePlanet={planet} activeSection={activeSection} />
+      <Content activePlanet={planet} activeSection={activeSection} setAccentColor={setAccentColor} setActiveSection={setActiveSection} accent={accentColor}/>
     </div>
   );
 }
