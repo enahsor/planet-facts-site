@@ -3,49 +3,48 @@ import * as mq from "styles/media-queries";
 import * as fonts from "styles/fonts";
 
 export const Section = styled.li`
-  background-color: ${(props) => props.$isActive ? props.$accent : null};
-  border: ${(props) => props.$isActive ? null : "1px solid rgba(255, 255, 255, 0.5)"}
-`
+  background-color: ${(props) => (props.$isActive ? props.$accent : null)};
+  border: ${(props) =>
+    props.$isActive ? null : "1px solid rgba(255, 255, 255, 0.5)"};
+`;
 
 export const Container = styled.main`
   display: grid;
   margin: 0 auto;
+  height: inherit;
   max-width: 85%;
   overflow: hidden;
 
-  > ul{
+  > ul {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     font-family: ${fonts.primary};
     font-weight: bold;
 
-      li{
+    li {
       text-transform: uppercase;
       font-size: 10px;
       padding: 15px 20px;
-      
+
       margin-bottom: 20px;
     }
   }
 
   div:first-of-type {
-    
     height: 100%;
     max-height: 100%;
     width: 100%;
     max-width: 100%;
     margin-top: 2ch;
-    margin: 0 auto;
     margin-bottom: 3ch;
-    
-    img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
       max-width: 100%;
     }
-    
   }
-
-
 
   section {
     h1 {
@@ -54,40 +53,40 @@ export const Container = styled.main`
       margin-bottom: 1.5ch;
       font-weight: normal;
     }
-    p, figcaption {
+    p,
+    figcaption {
       font-family: ${fonts.primary};
       line-height: 2.1;
       word-spacing: 2px;
     }
 
-    figcaption{
+    figcaption {
       display: flex;
       justify-content: center;
       opacity: 0.5;
 
-      span{
+      span {
         font-weight: lighter;
       }
 
-      a{
+      a {
         color: white;
         font-weight: bold;
         font-style: normal;
       }
 
-      cite{
-      display: flex;
-      
-      align-items: center;
+      cite {
+        display: flex;
+
+        align-items: center;
       }
 
-      svg{
+      svg {
         margin-left: 0.5ch;
       }
-  
     }
 
-    p{
+    p {
       margin-bottom: 1ch;
     }
 
@@ -119,81 +118,77 @@ export const Container = styled.main`
     }
   }
 
-  ${mq.medium}{
-
+  ${mq.medium} {
     grid-template-rows: 300px auto auto;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: 
-    "planet planet"
-    "text sections"
-    "summary summary";
+    grid-template-areas:
+      "planet planet"
+      "text sections"
+      "summary summary";
     grid-gap: 30px;
 
-    div:first-of-type{
-      
+    div:first-of-type {
       grid-area: planet;
       margin-bottom: 3ch;
-      img{
+      img {
         width: 100%;
         object-fit: contain;
         max-height: 100%;
       }
     }
 
-    section{
+    section {
       grid-area: text;
+      align-self: end;
 
-      h1{
+      h1 {
         font-size: 8ch;
       }
-      p{
+      p {
         font-size: 2ch;
       }
-      figcaption{
+      figcaption {
         justify-content: flex-start;
       }
     }
 
-    aside{
+    aside {
       grid-area: summary;
-      margin-bottom: 30px;
-      ul{
-      
+      display: flex;
+      align-items: center;
+
+      ul {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 2.5ch;
+        width: -webkit-fill-available;
       }
 
-      li{
+      li {
         flex-direction: column;
         align-items: start;
-        h2{
+        h2 {
           font-size: 8px;
           padding: 8px 0px;
         }
-        span{
+        span {
           font-size: 3ch;
         }
       }
-
     }
 
-    > ul{
+    > ul {
       padding-left: 30px;
       grid-area: sections;
     }
-
-
   }
 
   ${mq.small} {
     grid-template-rows: repeat(3, auto);
     grid-gap: 30px;
 
-      > ul{
-        display: none;
-      }
+    > ul {
+      display: none;
+    }
   }
-
-  
 `;
